@@ -41,7 +41,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-module BRSFmnCE (
+module BRSFmnCE #(
     parameter pAddr        = 10,            // Number of Address Bits
     parameter pWidth       = 8,             // Number of Data Bits
     parameter pRAMInitSize = 128,           // Amount Data to Init into FIFO RAM
@@ -221,7 +221,7 @@ assign HF = ~EF & (Cnt[pAddr] | Cnt[(pAddr - 1)]);
 //
 
 initial
-    $readmemh(pFRAM_Init, FRAM);
+    $readmemh(pFRAM_Init, FRAM, 0, ((1 << pAddr) - 1));
 
 always @(posedge Clk)
 begin

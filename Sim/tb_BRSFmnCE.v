@@ -29,21 +29,25 @@
 module tb_BRSFmnCE;
 
 // Inputs
-reg Rst;
-reg Clk;
-reg WE;
-reg RE;
-reg [7:0] DI;
+reg     Rst;
+reg     Clk;
 
-// Outputs
-wire [7:0] DO;
-wire ACK;
-wire FF;
-wire AF;
-wire HF;
-wire AE;
-wire EF;
-wire [10:0] Cnt;
+reg     Clr;
+
+reg     WE;
+reg     [7:0] DI;
+
+reg     RE;
+wire    [7:0] DO;
+wire    ACK;
+
+wire    FF;
+wire    AF;
+wire    HF;
+wire    AE;
+wire    EF;
+
+wire    [10:0] Cnt;
 
 integer i;
 
@@ -52,6 +56,8 @@ integer i;
 BRSFmnCE    uut (
                 .Rst(Rst), 
                 .Clk(Clk),
+                
+                .Clr(Clr),
                 
                 .WE(WE), 
                 .DI(DI), 
@@ -73,17 +79,18 @@ initial begin
     // Initialize Inputs
     Rst = 1;
     Clk = 1;
-    WE = 0;
-    RE = 0;
-    DI = $random(5);
+    Clr = 0;
+    WE  = 0;
+    RE  = 0;
+    DI  = $random(5);
     
-    i = 0;
+    i   = 0;
 
     // Wait 100 ns for global reset to finish
-    #106 Rst = 0;
+    #101 Rst = 0;
     
     // Add stimulus here
-
+    
     while (AF != 1) begin
         @(posedge Clk) #1;
         if(AF != 1) begin
